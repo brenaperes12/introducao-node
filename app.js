@@ -7,7 +7,7 @@ const dados = {
     contato: "+55 (85) 98774-4745"
 }
 
-const produtos = [
+let produtos = [
     {
         id: 1,
         nome: "Mouse",
@@ -75,7 +75,25 @@ app.post("/produtos", (req, res) => {
 })
 
 app.delete("/produtos/:id", (req, res) => {
-    res.json(produtos[req.params.id-1])
+    produtos.
+    existe = produtos.filter((produto) => produto.id == req.params.id)
+    if (existe.length > 0) {
+        let listanova = produtos.filter((produto) => produto.id != req.params.id)
+        produtos = listanova
+    } else {
+        res.status(404).send("Não achei!")
+    }
+    res.send("Apaguei!")
+})
+
+app.patch("/produtos/:id", (req, res) => {
+    let encontrado = produtos.find( (produto) => produto.id == req.params.id)
+    if (encontrado) {
+        encontrado.nome = req.query.nome
+        encontrado.preco = Number(req.query.preco)
+        encontrado.desc = req.query.desc
+        }
+    res.json(encontrado)
 })
 
 app.listen(3000, () => {
